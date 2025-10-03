@@ -16,8 +16,9 @@ class CuckooFilter:
 
     def _fingerprint(self, item):
         # Create a short fingerprint of the item (fixed-size string)
+        # Using SHA-256 then truncating to 32 hex chars
         h = hashlib.sha256(item.encode()).hexdigest()
-        return h[:8]
+        return h[:32]
 
     def _hashes(self, fp):
         # Compute two candidate bucket indices for a fingerprint
