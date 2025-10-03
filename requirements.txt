@@ -1,6 +1,4 @@
-random
-string
 matplotlib
-bitarray
-hashlib
 numpy
+mmh3
+bitarray
