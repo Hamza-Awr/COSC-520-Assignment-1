@@ -17,6 +17,7 @@ class CuckooFilter:
     def _fingerprint(self, item):
         # Create a short fingerprint of the item (fixed-size string)
         # Using SHA-256 then truncating to 32 hex chars
+        # Tried MurmurHash but it was taking too much time
         h = hashlib.sha256(item.encode()).hexdigest()
         return h[:32]
 
@@ -72,24 +73,25 @@ def benchmark_cuckoo_filter(n, number=1000):
     lookup_names = sample(usernames, lookups) + [''.join(random.choice(chars) for _ in range(5)) for _ in range(negative_samples)]
 
     import time
-    start = time.perf_counter_ns()
+    start = time.perf_counter_ns() # start recording time
     for name in lookup_names:
         cf.lookup(name)
-    end = time.perf_counter_ns()
-    avg_time_sec = ((end - start) / len(lookup_names)) / 1e9
+    end = time.perf_counter_ns() # end recording
+    avg_time_sec = ((end - start) / len(lookup_names)) / 1e9 # find the avg lookup time for 1 username in seconds
     return avg_time_sec
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    n_list_cuckoo = [10**3, 10**4, 10**5, 10**6, 10**7]
+    n_list_cuckoo = [10**3, 10**4, 10**5, 10**6, 10**7] # the number of usernames to test
     times_cuckoo = []
 
     for n in n_list_cuckoo:
-        avg_time = benchmark_cuckoo_filter(n)
+        avg_time = benchmark_cuckoo_filter(n) # running the benchmark code
         times_cuckoo.append(avg_time)
         print(f"n={n}, avg lookup time={avg_time:.9f} s")
 
+    # Plot the results of n vs. time
     plt.plot(n_list_cuckoo, times_cuckoo, marker="o", color="blue", label="Cuckoo Filter Lookup")
     plt.xscale('log')
     plt.yscale('log')

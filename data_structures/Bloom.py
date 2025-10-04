@@ -32,7 +32,7 @@ def benchmark_bloom_filter(n, number=1000):
     for name in usernames:
         bf.add(name)
 
-    lookups = min(number//2, len(usernames))
+    lookups = min(number//2, len(usernames)) # same strategy for every algorithm/data structure
     negative_samples = number - lookups
     lookup_names = sample(usernames, lookups) + [''.join(choice(chars) for _ in range(5)) for _ in range(negative_samples)]
 
@@ -48,7 +48,7 @@ def benchmark_bloom_filter(n, number=1000):
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    n_list_bloom = [10**3, 10**4, 10**5, 10**6, 10**7]
+    n_list_bloom = [10**3, 10**4, 10**5, 10**6, 10**7] # number of usernames (n)
     times_bloom = []
 
     for n in n_list_bloom:
@@ -56,11 +56,11 @@ if __name__ == "__main__":
         times_bloom.append(avg_time)
         print(f"n={n}, avg lookup time={avg_time:.9f} s")
 
-    plt.plot(n_list_bloom, times_bloom, marker="o", label="Bloom Filter Lookup")
+    plt.plot(n_list_bloom, times_bloom, marker="o", color='red', label="Bloom Filter Lookup")
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel("Number of usernames (n)")
     plt.ylabel("Avg lookup time (s)")
-    plt.title("Bloom Filter Average Lookup Time vs n (mmh3)")
+    plt.title("Bloom Filter Average Lookup Time Performance")
     plt.legend()
     plt.show()

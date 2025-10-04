@@ -36,7 +36,7 @@ def benchmark_linear_search(n, number=1000):
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    n_list_linear = [10**3, 10**4, 10**5, 10**6, 10**7]
+    n_list_linear = [10**3, 10**4, 10**5, 10**6, 10**7] # number of usernames to test
     times_linear = []
 
     for n in n_list_linear:
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         print(f"n={n}, average lookup time={avg_time:.8f} s")
     
     # Plot the graph of n vs time
-    plt.plot(n_list_linear, times_linear, marker='o')
+    plt.plot(n_list_linear, times_linear, marker='o', color='blue')
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel("Number of usernames (n)")

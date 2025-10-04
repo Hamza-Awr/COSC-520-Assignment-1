@@ -42,23 +42,23 @@ class TestHashTable(unittest.TestCase):
         self.target_exists = self.usernames[1000]
         self.target_absent = ''.join(random.choice(self.chars) for _ in range(8))
 
-    def test_found(self):
+    def test_found(self): # testing usernames that exist
         result = self.ht.contains(self.target_exists)
         print(f"\nHashTable existing username: {self.target_exists} → {result}")
         self.assertTrue(result)
 
-    def test_not_found(self):
+    def test_not_found(self): # testing usernames that don't exist
         result = self.ht.contains(self.target_absent)
         print(f"\nHashTable absent username: {self.target_absent} → {result}")
         self.assertFalse(result)
 
-    def test_benchmark_small(self):
+    def test_benchmark_small(self): # testing small amount of usernames
         n = 2000
         t = benchmark_hash(n)
         print(f"\nBenchmark HashTable with n={n} → avg lookup time={t:.6e} seconds")
         self.assertGreater(t, 0)
 
-    def test_benchmark_large(self):
+    def test_benchmark_large(self): # testing large amount of usernames
         n = 20000
         t = benchmark_hash(n)
         print(f"\nBenchmark HashTable with n={n} → avg lookup time={t:.6e} seconds")

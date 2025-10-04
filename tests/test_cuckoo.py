@@ -18,24 +18,24 @@ class TestCuckooFilter(unittest.TestCase):
         self.target_exists = self.usernames[500]
         self.target_absent = ''.join(random.choice(self.chars) for _ in range(8))
 
-    def test_found(self):
+    def test_found(self): # testing usernames that exist
         result = self.cf.lookup(self.target_exists)
         print(f"\nCuckoo Filter existing username: {self.target_exists} → {result}")
         self.assertTrue(result)
 
-    def test_not_found(self):
+    def test_not_found(self): # testing usernames that don't exist
         result = self.cf.lookup(self.target_absent)
         print(f"\nCuckoo Filter absent username: {self.target_absent} → {result}")
         # Cuckoo filter also may return false positives
         self.assertIn(result, [True, False])
 
-    def test_benchmark_small(self):
+    def test_benchmark_small(self): # testing small amount of usernames
         n = 2000
         t = benchmark_cuckoo_filter(n)
         print(f"\nBenchmark Cuckoo Filter with n={n} → avg lookup time={t:.6e} seconds")
         self.assertGreater(t, 0)
 
-    def test_benchmark_large(self):
+    def test_benchmark_large(self): # testing large amount of usernames
         n = 20000
         t = benchmark_cuckoo_filter(n)
         print(f"\nBenchmark Cuckoo Filter with n={n} → avg lookup time={t:.6e} seconds")

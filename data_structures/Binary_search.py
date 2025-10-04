@@ -32,18 +32,18 @@ def benchmark_binary_search(n, number=1000):
     lookup_names = sample(usernames, lookups) + [''.join(choice(chars) for _ in range(5)) for _ in range(negative_samples)]
 
     import time
-    start_time = time.perf_counter_ns()
+    start_time = time.perf_counter_ns() # start recording time in ns
     for name in lookup_names:
         binary_search(usernames, name)
-    total_time = time.perf_counter_ns() - start_time
+    total_time = time.perf_counter_ns() - start_time # end recording time
 
-    avg_time_sec = (total_time / len(lookup_names)) / 1e9
+    avg_time_sec = (total_time / len(lookup_names)) / 1e9 # calculate average time in seconds
     return avg_time_sec
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    n_list_binary = [10**3, 10**4, 10**5, 10**6, 10**7]
+    n_list_binary = [10**3, 10**4, 10**5, 10**6, 10**7] # number of usernames (n)
     times_binary = []
 
     for n in n_list_binary:
